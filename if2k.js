@@ -1,6 +1,6 @@
 function startif(data) {
     data.gotitems = {};
-    update(data, data.start, data.startwords);
+    update(data, data.start, "");
 }
 
 function clear_buttons() {
@@ -21,8 +21,8 @@ function clear() {
 
 function header(data, room, words) {
     addbutton("Inventory", function() {show_inventory(data);});
+    output("<i>" + data.rooms[room].titlename + "</i>");
     output(words);
-    output("<i>" + data.rooms[room].name + "</i>");
     if(!data.rooms[room].visited) {
         data.rooms[room].visited = true;
         output(data.rooms[room].desc);
@@ -38,7 +38,7 @@ function update(data, room, words) {
 
 function boilerplate(data, room) {
     for(var dir in data.rooms[room].links) {
-        output("To the " + dir + " is " + data.rooms[data.rooms[room].links[dir]].name + ".");
+        output("To the " + dir.toLowerCase() + " is " + data.rooms[data.rooms[room].links[dir]].sentencename + ".");
         addbutton(dir, function() {update(data, data.rooms[room].links[dir], "");});
 
     }
