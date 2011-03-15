@@ -4,10 +4,15 @@
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="poop.js"></script>
         <script type="text/javascript" src="if2k.js"></script>
+        <script type="text/javascript">
+            function poop() {
+                input($("#input").val(), game);
+            }
+        </script>
     </head>
     <body>
         <p id="output"> </p>
-        <p><form>
+        <p><form onsubmit="poop(); return false;">
             <input type="text" id="input" />
             <input type="submit" value="Submit" />
         </form></p>
