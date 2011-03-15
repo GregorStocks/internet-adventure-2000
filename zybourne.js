@@ -91,19 +91,18 @@ var game = {
     "The Slums": {
         "titlename": "The Slums",
         "sentencename": "The Slums",
-        "desc": "The Slums are just what their name would imply - slums. They are conveniently located between Uptown, the Military District, and the Commercial District.",
+        "desc": "The Slums are just what their name would imply - slums. They are conveniently located between Uptown, the Military District, and the Commercial District.<br><img src='images/map.gif'/>",
         "links": {
             "South": "bar",
             "West": "casino"
-        },
-        "items": ["dog"],
+        }, "items": ["dog"],
         "actions": function(data) {return {}},
         "backgrounds": function(data) {return []}
     },
     "casino": {
         "titlename": "Casino",
         "sentencename": "a casino",
-        "desc": "A casino. There's a poker table.",
+        "desc": "A casino. There's a poker table. Johnny is here, but the table he's playing at is full.<br><img src='images/johnny.jpg'/>",
         "links": {
             "East": "The Slums"
         },

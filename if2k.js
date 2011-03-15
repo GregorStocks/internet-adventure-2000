@@ -50,6 +50,7 @@ function boilerplate(data, room) {
                 data.gotitems[items[i]] = 1;
                 update(data, room, "");
                 output("Got " + data.items[items[i]].name + ".");
+                delete data.rooms[room].items[i];
             });
         }
     }
