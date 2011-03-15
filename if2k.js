@@ -1,6 +1,6 @@
 function startif(data) {
     data.gotitems = {};
-    arrive(data, data.start);
+    update(data, data.start);
 }
 
 function clear_buttons() {
@@ -14,26 +14,19 @@ function addbutton(text, func) {
     $("#buttons").append("<button type='button' onclick='funcs[\"" + text + "\"]()'>" + text + "</button>");
 }
 
-function arrive(data, room) {
-    data.currentroom = room;
-    clear_output();
-    clear_buttons();
-    addbutton("inventory", function() {show_inventory(data);});
-    output("You have arrived in " + data.rooms[room].name + ". " + data.rooms[room].desc + ".");
-    update(data, room);
-}
-
-function be_in(data, room) {
-    clear_output();
-    clear_buttons();
-    addbutton("inventory", function() {show_inventory(data);});
-    update(data, room);
-}
-
 function update(data, room) {
+    clear_output();
+    clear_buttons();
+    addbutton("inventory", function() {show_inventory(data);});
+    output("<i>" + data.rooms[room].name + "</i>");
+    if(!data.rooms[room].visited) {
+        data.rooms[room].visited = true;
+        output(data.rooms[room].desc);
+    }
+
     for(var dir in data.rooms[room].links) {
         output("To the " + dir + " is " + data.rooms[data.rooms[room].links[dir]].name + ".");
-        addbutton(dir, function() {arrive(data, data.rooms[room].links[dir]);});
+        addbutton(dir, function() {update(data, data.rooms[room].links[dir]);});
 
     }
 
@@ -43,7 +36,7 @@ function update(data, room) {
             output("There is " + data.items[items[i]].name + " here.");
             addbutton("get " + data.items[items[i]].name, function() {
                 data.gotitems[items[i]] = 1;
-                be_in(data, room);
+                update(data, room);
                 output("Picking up " + data.items[items[i]].name + ".");
             });
         }

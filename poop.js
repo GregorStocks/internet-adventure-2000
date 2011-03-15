@@ -3,7 +3,7 @@ var game = {
 "rooms": {
     "poopy": {
         "name": "a poopy room",
-        "desc": "This room is poopy",
+        "desc": "This room is poopy as heck!",
         "links": {
             "north": "less poopy",
             "south": "less poopy",
@@ -23,7 +23,7 @@ var game = {
     },
     "less poopy" : {
         "name": "a less poopy room",
-        "desc": "This room is less poopy",
+        "desc": "This room is less poopy, although there's still some poopiness.",
         "links": {
             "north": "poopy",
             "south": "poopy",
