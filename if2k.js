@@ -39,8 +39,7 @@ function update(data, room, words) {
 function boilerplate(data, room) {
     for(var dir in data.rooms[room].links) {
         output("To the " + dir.toLowerCase() + " is " + data.rooms[data.rooms[room].links[dir]].sentencename + ".");
-        addbutton(dir, function() {update(data, data.rooms[room].links[dir], "");});
-
+        (function(d) {addbutton(dir, function() {update(data, data.rooms[room].links[d], "");});})(dir);
     }
 
     var items = data.rooms[room].items;

@@ -4,9 +4,10 @@ var game = {
     "bar": {
         "titlename": "Bar",
         "sentencename": "less of the bar",
-        "desc": "You're in a bar in Shakiri. You were fleeing from the armies of Capital once, but that was a long time ago...before the horrors of the \"CITY5\" conflagration. Now you're in a bar. A bar in Shakiri, on the road to Kinthmora, and from there to Bookworld. There's more bar to the south.",
+        "desc": "You're in a bar in Shakiri. You were fleeing from the armies of Capital once, but that was a long time ago...before the horrors of the \"CITY5\" conflagration. Now you're in a bar. A bar in Shakiri, on the road to Kinthmora, and from there to Bookworld.",
         "links": {
-            "South": "morebar"
+            "South": "morebar",
+            "North": "The Slums"
         },
         "items": [],
         "state": 0,
@@ -67,9 +68,9 @@ var game = {
                     return {
                         "Offer Johnny the clock": function(data) {
                             data.gotitems["clock"] = 0;
-                            data.rooms.morebar.links = {};
+                            data.gotitems["card"] = 1;
                             data.rooms.morebar.state = 2;
-                            update(data, data.currentroom, "You and Johnny go off on all sorts of adventures. THE END(?)");
+                            update(data, data.currentroom, "Johnny offers to give you one of his famed playing cards for the clock, and you gladly accept. Then he's gone. Where did he go? I don't know. All I know is that this is Zybourne Quest.");
                         }
                     };
                 } else {
@@ -83,16 +84,56 @@ var game = {
             } else if(data.rooms.morebar.state == 1) {
                 return ["Johnny Fiveaces is here. He appears to be excited.<br><img src='images/johnny.gif' />"];
             } else {
-                return ["<br><img src='images/win.jpg'>"];
+                return [];
             }
         }
     },
+    "The Slums": {
+        "titlename": "The Slums",
+        "sentencename": "The Slums",
+        "desc": "The Slums are just what their name would imply - slums. They are conveniently located between Uptown, the Military District, and the Commercial District.",
+        "links": {
+            "South": "bar",
+            "West": "casino"
+        },
+        "items": ["dog"],
+        "actions": function(data) {return {}},
+        "backgrounds": function(data) {return []}
+    },
+    "casino": {
+        "titlename": "Casino",
+        "sentencename": "a casino",
+        "desc": "A casino. There's a poker table.",
+        "links": {
+            "East": "The Slums"
+        },
+        "items": [],
+        "actions": function(data) {return {
+            "Play Poker": function(data) {
+                if(data.gotitems["card"] == 1) {
+                    clear();
+                    output("With the luck from Johnny's card, you win big, fast! Your money brings you happiness. The End(?)<br><img src='images/win.jpg'/>");
+                } else {
+                    update(data, data.currentroom, "You would have made a lot of money using what you learned from Bill Fillmaff, but you got some terrible beats! Argh!");
+                }
+            }
+        }},
+        "backgrounds": function(data) {return []}
+    }
 },
 "items": {
     "clock": {
         "name": "the Zybourne Clock",
         "desc": "This, darling, is the Zybourne Clock."
-    }
+    },
+    "card": {
+        "name": "a card",
+        "desc": "It's one of Johnny's playing cards! Wow!",
+    },
+    "dog": {
+        "name": "a dog",
+        "desc": "It's yellow."
+    },
 },
 "start": "bar",
 "name": "Quest for Zybourne"
