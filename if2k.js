@@ -1,6 +1,6 @@
 function startif(data) {
     data.gotitems = {};
-    update(data, data.start);
+    update(data, data.start, data.startwords);
 }
 
 function clear_buttons() {
@@ -11,22 +11,35 @@ function clear_buttons() {
 var funcs = {}
 function addbutton(text, func) {
     funcs[text] = func;
-    $("#buttons").append("<button type='button' onclick='funcs[\"" + text + "\"]()'>" + text + "</button>");
+    $("#buttons").append("<button type='button' onclick=\"funcs['" + text + "']()\">" + text + "</button>");
 }
 
-function update(data, room) {
+function clear() {
     clear_output();
     clear_buttons();
-    addbutton("inventory", function() {show_inventory(data);});
+}
+
+function header(data, room, words) {
+    addbutton("Inventory", function() {show_inventory(data);});
+    output(words);
     output("<i>" + data.rooms[room].name + "</i>");
     if(!data.rooms[room].visited) {
         data.rooms[room].visited = true;
         output(data.rooms[room].desc);
     }
+}
 
+function update(data, room, words) {
+    clear();
+    data.currentroom = room;
+    header(data, room, words);
+    boilerplate(data, room);
+}
+
+function boilerplate(data, room) {
     for(var dir in data.rooms[room].links) {
         output("To the " + dir + " is " + data.rooms[data.rooms[room].links[dir]].name + ".");
-        addbutton(dir, function() {update(data, data.rooms[room].links[dir]);});
+        addbutton(dir, function() {update(data, data.rooms[room].links[dir], "");});
 
     }
 
@@ -34,29 +47,34 @@ function update(data, room) {
     for(var i in items) {
         if(!data.gotitems[items[i]]) {
             output("There is " + data.items[items[i]].name + " here.");
-            addbutton("get " + data.items[items[i]].name, function() {
+            addbutton("Get " + data.items[items[i]].name, function() {
                 data.gotitems[items[i]] = 1;
-                update(data, room);
-                output("Picking up " + data.items[items[i]].name + ".");
+                update(data, room, "");
+                output("Got " + data.items[items[i]].name + ".");
             });
         }
     }
 
-    var actions = data.rooms[room].actions()
+    var actions = data.rooms[room].actions(data)
     for(var text in actions) {
-        addbutton(text, function() {actions[text](data);});
+        (function(t) {addbutton(t, function() {actions[t](data);});})(text);
     }
-    var backgrounds = data.rooms[room].backgrounds()
+    var backgrounds = data.rooms[room].backgrounds(data)
     for(var b in backgrounds) {
         output(backgrounds[b]);
     }
 }
 
 function show_inventory(data) {
+    var something = false;
     for(var i in data.gotitems) {
         if(data.gotitems[i]) {
-            output("You have a " + data.items[i].name + ". It is " + data.items[i].desc + ".");
+            output("You have " + data.items[i].name + ". " + data.items[i].desc);
+            something = true;
         }
+    }
+    if(!something) {
+        output("You have nothing.");
     }
 }
 

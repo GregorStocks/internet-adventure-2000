@@ -36,10 +36,11 @@ var game = {
 },
 "items": {
     "box of poop": {
-        "name": "box of poop",
-        "desc": "a box of poop"
+        "name": "a box of poop",
+        "desc": "It's a box of poop."
     }
 },
 "start": "poopy",
+"startwords": "<h3>Poop Quest</h3",
 "name": "Poop Quest"
 };
