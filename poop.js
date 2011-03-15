@@ -1,17 +1,21 @@
 // Poop Quest 1.0
 var game = {
 "rooms": {
-    "a": {
-        "name": "poopy room",
+    "poopy": {
+        "name": "a poopy room",
         "desc": "This room is poopy",
-        "north": "b"
+        "links": {
+            "north": "less poopy"
+        }
     },
-    "b" : {
-        "name": "less poopy room",
+    "less poopy" : {
+        "name": "a less poopy room",
         "desc": "This room is less poopy",
-        "south": "a"
+        "links": {
+            "south": "poopy"
+        }
     }
 },
-"start": "a",
+"start": "poopy",
 "name": "Poop Quest"
 };

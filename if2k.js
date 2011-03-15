@@ -8,16 +8,21 @@ function arrive(data, room) {
     var dirs = ["north", "south", "east", "west"];
     for(var i in dirs) {
         var dir = dirs[i];
-        if(data.rooms[room][dir]) {
-            output("To the " + dir + " is " + data.rooms[data.rooms[room][dir]].name);
+        if(data.rooms[room].links[dir]) {
+            output("To the " + dir + " is " + data.rooms[data.rooms[room].links[dir]].name + ".");
         }
     }
 }
 
 function input(text, data) {
+    if (text == "n") text = "north";
+    if (text == "s") text = "south";
+    if (text == "e") text = "east";
+    if (text == "w") text = "west";
+
     var r = data.rooms[data.currentroom];
-    if(r[text]) { //AAAAAAAAAAAAAAAAA
-        arrive(data, r[text]);
+    if(r.links[text]) {
+        arrive(data, r.links[text]);
     } else {
         output("that's silly, try again.");
     }
