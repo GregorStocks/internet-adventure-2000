@@ -10,7 +10,16 @@ var game = {
             "east": "less poopy",
             "west": "less poopy"
         },
-        "items": []
+        "items": [],
+        "npcs": {
+            "johnny fiveaces": {
+                "name": "Johnny Fiveaces",
+                "desc": "He is really pretty. Say hi to him",
+                "actions": {
+                    "say hi": function(data) {output("Johnny says 'hi' back.");}
+                }
+            }
+        }
     },
     "less poopy" : {
         "name": "a less poopy room",
@@ -23,7 +32,8 @@ var game = {
         },
         "items": [
             "box of poop"
-        ]
+        ],
+        "npcs": {}
     }
 },
 "items": {
