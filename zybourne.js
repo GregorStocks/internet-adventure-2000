@@ -111,7 +111,7 @@ var game = {
             "Play Poker": function(data) {
                 if(data.gotitems["card"] == 1) {
                     clear();
-                    output("With the luck from Johnny's card, you win big, fast! Your money brings you happiness. The End(?)<br><img src='images/win.jpg'/>");
+                    output("With the luck from Johnny's card, you win big, fast! Your money brings you happiness. The End(?)<br><a href='http://goatse.ragingfist.net/hello.jpg'><img src='images/win.jpg'/></a>");
                 } else {
                     update(data, data.currentroom, "You would have made a lot of money using what you learned from Bill Fillmaff, but you got some terrible beats! Argh!");
                 }
