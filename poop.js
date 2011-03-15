@@ -3,12 +3,12 @@ var game = {
 "rooms": {
     "a": {
         "name": "poopy room",
-        "desc": "this room is poopy",
+        "desc": "This room is poopy",
         "north": "b"
     },
     "b" : {
         "name": "less poopy room",
-        "desc": "this room is less poopy",
+        "desc": "This room is less poopy",
         "south": "a"
     }
 },
