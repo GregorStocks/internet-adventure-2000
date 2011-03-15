@@ -9,7 +9,8 @@ var game = {
             "south": "less poopy",
             "east": "less poopy",
             "west": "less poopy"
-        }
+        },
+        "items": []
     },
     "less poopy" : {
         "name": "a less poopy room",
@@ -19,7 +20,16 @@ var game = {
             "south": "poopy",
             "east": "poopy",
             "west": "poopy"
-        }
+        },
+        "items": [
+            "box of poop"
+        ]
+    }
+},
+"items": {
+    "box of poop": {
+        "name": "box of poop",
+        "desc": "a box of poop"
     }
 },
 "start": "poopy",

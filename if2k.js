@@ -1,4 +1,5 @@
 function startif(data) {
+    data.gotitems = {};
     arrive(data, data.start);
 }
 
@@ -12,6 +13,20 @@ function arrive(data, room) {
             output("To the " + dir + " is " + data.rooms[data.rooms[room].links[dir]].name + ".");
         }
     }
+    var items = data.rooms[room].items;
+    for(var i in items) {
+        if(!data.gotitems[items[i]]) {
+            output("There is " + data.items[items[i]].name + " here.");
+        }
+    }
+}
+
+function show_inventory(data) {
+    for(var i in data.gotitems) {
+        if(data.gotitems[i]) {
+            output("You have a " + data.items[i].name + ". It is " + data.items[i].desc + ".");
+        }
+    }
 }
 
 function input(text, data) {
@@ -23,8 +38,21 @@ function input(text, data) {
     var r = data.rooms[data.currentroom];
     if(r.links[text]) {
         arrive(data, r.links[text]);
+    } else if (text == "i") {
+        show_inventory(data);
+    } else if (/^get /.test(text)) {
+        for(var i in r.items) {
+            if(data.gotitems[r.items[i]] == 1) {
+                continue;
+            }
+            output("Picking up " + data.items[r.items[i]].name + ".");
+            data.gotitems[r.items[i]] = 1;
+            return;
+        }
+        output("Nothing here, dummy!");
+        return;
     } else {
-        output("that's silly, try again.");
+        output("what?");
     }
 }
 
