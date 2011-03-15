@@ -5,14 +5,20 @@ var game = {
         "name": "a poopy room",
         "desc": "This room is poopy",
         "links": {
-            "north": "less poopy"
+            "north": "less poopy",
+            "south": "less poopy",
+            "east": "less poopy",
+            "west": "less poopy"
         }
     },
     "less poopy" : {
         "name": "a less poopy room",
         "desc": "This room is less poopy",
         "links": {
-            "south": "poopy"
+            "north": "poopy",
+            "south": "poopy",
+            "east": "poopy",
+            "west": "poopy"
         }
     }
 },
