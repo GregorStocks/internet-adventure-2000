@@ -3,22 +3,58 @@ function startif(data) {
     arrive(data, data.start);
 }
 
+function clear_buttons() {
+    $("#buttons").empty();
+    funcs = {}
+}
+
+var funcs = {}
+function addbutton(text, func) {
+    funcs[text] = func;
+    $("#buttons").append("<button type='button' onclick='funcs[\"" + text + "\"]()'>" + text + "</button>");
+}
+
 function arrive(data, room) {
     data.currentroom = room;
+    clear_output();
+    clear_buttons();
+    addbutton("inventory", function() {show_inventory(data);});
     output("You have arrived in " + data.rooms[room].name + ". " + data.rooms[room].desc + ".");
+    update(data, room);
+}
+
+function be_in(data, room) {
+    clear_output();
+    clear_buttons();
+    addbutton("inventory", function() {show_inventory(data);});
+    update(data, room);
+}
+
+function update(data, room) {
     for(var dir in data.rooms[room].links) {
         output("To the " + dir + " is " + data.rooms[data.rooms[room].links[dir]].name + ".");
+        addbutton(dir, function() {arrive(data, data.rooms[room].links[dir]);});
+
     }
+
     var items = data.rooms[room].items;
     for(var i in items) {
         if(!data.gotitems[items[i]]) {
             output("There is " + data.items[items[i]].name + " here.");
+            addbutton("get " + data.items[items[i]].name, function() {
+                data.gotitems[items[i]] = 1;
+                be_in(data, room);
+                output("Picking up " + data.items[items[i]].name + ".");
+            });
         }
     }
 
     var npcs = data.rooms[room].npcs
     for(var i in npcs) {
         output(npcs[i].name + " is here. " + npcs[i].desc + ".");
+        for(var text in npcs[i].actions) {
+            addbutton(text, function() {npcs[i].actions[text](data);});
+        }
     }
 }
 
@@ -30,38 +66,8 @@ function show_inventory(data) {
     }
 }
 
-function input(text, data) {
-    if (text == "n") text = "north";
-    if (text == "s") text = "south";
-    if (text == "e") text = "east";
-    if (text == "w") text = "west";
-
-    var r = data.rooms[data.currentroom];
-    if(r.links[text]) {
-        arrive(data, r.links[text]);
-    } else if (text == "i") {
-        show_inventory(data);
-    } else if (/^get /.test(text)) {
-        //FIXME doesn't actually parse their get, just gets first item
-        for(var i in r.items) {
-            if(data.gotitems[r.items[i]] == 1) {
-                continue;
-            }
-            output("Picking up " + data.items[r.items[i]].name + ".");
-            data.gotitems[r.items[i]] = 1;
-            return;
-        }
-        output("Nothing here, dummy!");
-        return;
-    } else {
-        for(var i in r.npcs) {
-            if(r.npcs[i].actions[text]) {
-                r.npcs[i].actions[text](data);
-                return;
-            }
-        }
-        output("what?");
-    }
+function clear_output() {
+    $("p#output").text("");
 }
 
 function output(text) {
