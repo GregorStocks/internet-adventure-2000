@@ -11,14 +11,11 @@ var game = {
             "west": "less poopy"
         },
         "items": [],
-        "npcs": {
-            "johnny fiveaces": {
-                "name": "Johnny Fiveaces",
-                "desc": "He is really pretty. Say hi to him",
-                "actions": {
-                    "say hi": function(data) {output("Johnny says 'hi' back.");}
-                }
-            }
+        "actions": function(data) {
+            return {"say hi": function(data) {output("Johnny says 'hi' back.");}};
+        },
+        "backgrounds": function(data) {
+            return ["Johnny Fiveaces is here. Say hi to him, maybe?"]
         }
     },
     "less poopy" : {
@@ -33,7 +30,8 @@ var game = {
         "items": [
             "box of poop"
         ],
-        "npcs": {}
+        "actions": function(data) { return {}; },
+        "backgrounds": function(data) { return []; }
     }
 },
 "items": {

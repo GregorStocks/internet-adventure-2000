@@ -42,12 +42,13 @@ function update(data, room) {
         }
     }
 
-    var npcs = data.rooms[room].npcs
-    for(var i in npcs) {
-        output(npcs[i].name + " is here. " + npcs[i].desc + ".");
-        for(var text in npcs[i].actions) {
-            addbutton(text, function() {npcs[i].actions[text](data);});
-        }
+    var actions = data.rooms[room].actions()
+    for(var text in actions) {
+        addbutton(text, function() {actions[text](data);});
+    }
+    var backgrounds = data.rooms[room].backgrounds()
+    for(var b in backgrounds) {
+        output(backgrounds[b]);
     }
 }
 
